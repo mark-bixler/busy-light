@@ -1,0 +1,8 @@
+[
+  { "label" : "Available", "r" : 0, "g" : 255, "b" : 0 },
+  { "label" : "Busy", "r" : 255, "g" : 70, "b" : 0 },
+  { "label" : "In a meeting", "r" : 255, "g" : 0, "b" : 0 },
+  { "label" : "Away", "r" : 255, "g" : 220, "b" : 0 },
+  { "label" : "Focus", "r" : 150, "g" : 0, "b" : 255 },
+  { "label" : "Heads down", "r" : 0, "g" : 0, "b" : 255 }
+]
