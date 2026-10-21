@@ -47,12 +47,26 @@ struct BusylightMenuApp: App {
             ContentView()
                 .environmentObject(model)
         } label: {
-            // Beacon glyph that tints to the active status color (gray when off).
-            Image(systemName: model.activeColor == nil ? "light.beacon.min" : "light.beacon.max.fill")
-                .foregroundStyle(model.activeColor ?? Color.primary)
+            Image(nsImage: menuBarIcon(model.activeColor))
         }
         .menuBarExtraStyle(.window)
     }
+}
+
+/// Menu-bar labels render as templates (monochrome), which drops any tint. Bake the
+/// color into a non-template image instead; keep the template glyph when off.
+private func menuBarIcon(_ color: Color?) -> NSImage {
+    let name = color == nil ? "light.beacon.min" : "light.beacon.max.fill"
+    let base = NSImage(systemSymbolName: name, accessibilityDescription: "Busylight")!
+    guard let color else {
+        base.isTemplate = true
+        return base
+    }
+    let config = NSImage.SymbolConfiguration(pointSize: 15, weight: .regular)
+        .applying(.init(paletteColors: [NSColor(color)]))
+    let tinted = base.withSymbolConfiguration(config) ?? base
+    tinted.isTemplate = false
+    return tinted
 }
 
 struct ContentView: View {
